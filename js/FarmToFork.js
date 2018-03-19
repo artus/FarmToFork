@@ -1,11 +1,11 @@
 // Require dependencies.
-const driver = require('bigchain-driver');
+const driver = require('bigchaindb-driver');
 const bip39 = require('bip39');
 
 // Require the dotenv library.
 require('dotenv').config()
 
-export class FieldToFork {
+class FarmToFork {
 
     /**
      * Initialise a new class that we'll use to handle our connection with the network.
@@ -19,4 +19,10 @@ export class FieldToFork {
     }
 
     // Here we'll write our methods.
+}
+
+// Create exports to make some functionality available in the browser.
+
+module.exports = {
+    FarmToFork
 }

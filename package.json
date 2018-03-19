@@ -1,0 +1,31 @@
+{
+  "name": "farmtofork",
+  "version": "1.0.0",
+  "description": "A POC library the life-cycle of a food-item in the food-industry.",
+  "main": "js/FarmToFork.js",
+  "dependencies": {
+    "bigchaindb-driver": "^3.2.0",
+    "bip39": "^2.5.0",
+    "dotenv": "^5.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "browserify js/FarmToFork.js -s ftf_module -o js/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artusvranken/FieldToFork.git"
+  },
+  "keywords": [
+    "BigchainDB",
+    "blockchain",
+    "vue.js"
+  ],
+  "author": "Artus Vranken",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artusvranken/FieldToFork/issues"
+  },
+  "homepage": "https://github.com/artusvranken/FieldToFork#readme"
+}
