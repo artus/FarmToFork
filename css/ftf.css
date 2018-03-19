@@ -1,0 +1,251 @@
+:root
+{
+    --ftf-color-1: rgb(216, 216, 216);
+    --ftf-color-header: white;
+    --ftf-padding: 15px;
+    --ftf-padding-small: 8px;
+    --ftf-menu-width: 250px;
+    --ftf-button-padding: 10px;
+
+    --ftf-color-primary: rgb(31, 128, 207);
+    --ftf-color-primary-alt: rgb(1, 103, 187);
+
+    --ftf-color-menu: #394263;
+    --ftf-color-menu-alt: #2b3249;
+
+    --ftf-color-black: rgba(0, 0, 0, 0.7);
+
+    --ftf-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    float: left;
+
+    color: var(--ftf-color-black);
+}
+
+#ftf-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+body
+{
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+}
+
+#ftf-container
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ftf-color-1);
+}
+
+.ftf-header
+{
+    padding: var(--ftf-padding);
+    background-color: var(--ftf-color-header);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.200);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--ftf-color-black);
+}
+
+.ftf-header *
+{
+    margin: 0;
+}
+
+.ftf-header h1
+{
+    font-size: 2em;
+}
+
+.ftf-button
+{
+    padding: var(--ftf-button-padding);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ftf-primary
+{
+    background-color: var(--ftf-color-primary);
+    color: white;
+}
+
+.ftf-primary:hover
+{
+    background-color: var(--ftf-color-primary-alt);
+}
+
+.ftf-page-container
+{
+    width: 100%;
+    height: calc(100% - 2em - 2 * var(--ftf-padding));
+}
+
+.ftf-menu
+{
+    height: 100%;
+    padding: var(--ftf-padding);
+
+    background-color: var(--ftf-color-menu);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.ftf-menu-item
+{
+    color: white !important;
+    padding: var(--ftf-padding);
+    width: var(--ftf-menu-width);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ftf-menu-item:hover
+{
+    transition: 0.5s;
+
+    background-color: var(--ftf-color-menu-alt);
+}
+
+.ftf-menu-item *
+{
+    color: white;
+}
+
+.ftf-menu hr
+{
+    border: 0;
+    border-top: 1px solid white;
+    margin-top: var(--ftf-padding);
+    margin-bottom: var(--ftf-padding);
+}
+
+.ftf-content-container
+{
+    height: 100%;
+    width: calc(100% - var(--ftf-menu-width) - 3 * var(--ftf-button-padding));
+
+    padding: calc(2 * var(--ftf-padding));
+}
+
+.ftf-content-pane
+{
+    width: 100%;
+    height: 100%;
+}
+
+.ftf-box
+{
+    background-color: white;
+    box-shadow: var(--ftf-shadow);
+    padding: var(--ftf-padding);
+
+    color: var(--ftf-color-black);
+
+    margin-bottom: calc(2 * var(--ftf-padding));
+}
+
+.ftf-full
+{
+    width: 100%;
+}
+
+.ftf-wide
+{
+    max-width: 900px;
+    margin-right: calc(100% - 900px);
+}
+
+.ftf-box h2
+{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.ftf-box hr
+{
+    margin-top: var(--ftf-padding);
+    margin-bottom: var(--ftf-padding);
+
+    width: 100%;
+
+    border: 0;
+    border-top: 1px solid var(--ftf-color-black);
+}
+
+.ftf-control
+{
+    width: 100%;
+    padding: calc(var(--ftf-padding) / 2);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+.ftf-control input
+{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    border-left: 1px solid var(--ftf-color-black);
+    border-bottom: 1px solid var(--ftf-color-black);
+    border-top: 1px solid var(--ftf-color-black);
+    border-right: 0;
+
+    width: 100%;
+}
+
+.ftf-control .ftf-input-button, .ftf-control input
+{
+    padding: var(--ftf-padding-small);
+    font-size: 1em;
+
+    height: calc(1em + var(--ftf-padding-small) * 2 + 2px);
+}
+
+.ftf-control .ftf-input-button
+{
+    background-color: var(--ftf-color-primary);
+    color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    line-height: 1em;
+    border-top: 1px solid var(--ftf-color-primary-border);
+    border-right: 1px solid var(--ftf-color-primary-border);
+    border-bottom: 1px solid var(--ftf-color-primary-border);
+
+    cursor: pointer;
+}
+
+.ftf-control .ftf-input-button:hover
+{
+    background-color: var(--ftf-color-primary-alt);
+}
