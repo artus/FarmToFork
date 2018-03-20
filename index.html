@@ -29,14 +29,14 @@
             <!-- Menu -->
             <div class="ftf-menu">
 
-                <div class="ftf-menu-item">
+                <div class="ftf-menu-item" v-on:click="menuClicked('identity')">
                     <i class="fas fa-user"></i>
                     <div class="ftf-menu-item-link">Identity</div>
                 </div>
 
                 <hr>
 
-                <div class="ftf-menu-item">
+                <div class="ftf-menu-item" v-on:click="menuClicked('assets')">
                         <i class="fas fa-user"></i>
                     <div class="ftf-menu-item-link">Assets</div>
                 </div>
@@ -51,6 +51,8 @@
             <!-- Content container -->
             <div class="ftf-content-container">
 
+
+                <!-- Identity pane -->
                 <div v-if="isActive('identity')" class="ftf-content-pane">
 
                     <div class="ftf-box">
@@ -69,6 +71,73 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Asset pane -->
+                <div v-if="isActive('assets')" class="ftf-content-pane">
+
+                    <div class="ftf-box">
+                        <h2>Assets | Food-items</h2>
+                        <hr>
+                        <p>In this proof of concept, the assets in our transactions are food-items that are currently in circulation in the market.</p>
+                    </div>
+
+                    <div class="ftf-box ftf-full ftf-wide">
+                        <h2>Create a new food-item</h2>
+                        <p>Enter a description for the food-item you want to introduce to the market:</p>
+                        <div class="ftf-control">
+                            <input v-model="assetInput" type="text">
+                            <div class="ftf-input-button" v-on:click="assetButtonClicked()">create</div>
+                        </div>
+                        <br>
+                        <h2>Your food-items</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>description</th>
+                                    <th>transaction ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="asset in assets" v-on:click="transactionClicked(asset.id)">
+                                    <td>{{asset.asset.data.item}}</td>
+                                    <td>{{asset.id}}</td>
+                                </tr>
+                                <tr v-if="assets.size == 0">
+                                    <td colspan="2" style="text-align: left">No food-items.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <!-- Transactions pane -->
+                <div v-if="isActive('transactions')" class="ftf-content-pane">
+
+                    <div class="ftf-box ftf-wide">
+                        <h2>Transaction chain</h2>
+                        <hr>
+                        <p>Each asset on the BigchainDB has a list of transactions that have been performed upon it.</p>
+                    </div>
+
+                    <div class="ftf-box ftf-wide ftf-box-no-margin">
+                        <h2>Perform action on food-item: {{activeTransaction.asset.data.item}}</h2>
+                        <p>Enter an action to perform:</p>
+                        <div class="ftf-control">
+                            <input type="text" v-model="actionInput">
+                            <div class="ftf-input-button" v-on:click="actionButtonClicked()">process</div>
+                        </div>
+                    </div>
+
+                    <span class="ftf-full" v-for="transaction in transactionsForAsset.slice().reverse()">
+                    <div class="ftf-arrow ftf-full"></div>
+                    <div class="ftf-box ftf-wide ftf-box-no-margin">
+                        <h2>{{transaction.metadata.action}}</h2>
+                        <p>{{new Date(transaction.metadata.date).toLocaleString()}}</p>
+                    </div>
+                    </span>
+                    
                 </div>
 
             </div>

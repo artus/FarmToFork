@@ -13,6 +13,10 @@
     --ftf-color-menu: #394263;
     --ftf-color-menu-alt: #2b3249;
 
+    --ftf-color-table: rgb(93, 140, 194);
+    --ftf-color-table-alt: rgb(220, 237, 255);
+    --ftf-color-table-alt-hover: rgb(179, 215, 253);
+
     --ftf-color-black: rgba(0, 0, 0, 0.7);
 
     --ftf-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
@@ -94,6 +98,8 @@ body
 {
     width: 100%;
     height: calc(100% - 2em - 2 * var(--ftf-padding));
+
+    overflow: auto;
 }
 
 .ftf-menu
@@ -150,6 +156,8 @@ body
     width: calc(100% - var(--ftf-menu-width) - 3 * var(--ftf-button-padding));
 
     padding: calc(2 * var(--ftf-padding));
+
+    overflow: auto;
 }
 
 .ftf-content-pane
@@ -169,6 +177,11 @@ body
     margin-bottom: calc(2 * var(--ftf-padding));
 }
 
+.ftf-box:last-child
+{
+    margin-bottom: var(--ftf-padding) !important;
+}
+
 .ftf-full
 {
     width: 100%;
@@ -183,9 +196,15 @@ body
 .ftf-box h2
 {
     margin: 0;
+    margin-top: var(--ftf-padding);
     padding: 0;
     width: 100%;
     font-size: 1.2em;
+}
+
+.ftf-box h2:first-of-type
+{
+    margin-top: 0;
 }
 
 .ftf-box hr
@@ -248,4 +267,64 @@ body
 .ftf-control .ftf-input-button:hover
 {
     background-color: var(--ftf-color-primary-alt);
+}
+
+.ftf-box table 
+{
+    width: 100%;
+
+    margin-top: var(--ftf-padding);
+
+    border-collapse: collapse;
+}
+
+.ftf-box table *
+{
+    float: none;
+}
+
+.ftf-box table thead
+{
+    background-color: var(--ftf-color-table);
+    padding: calc(var(--ftf-padding) / 2);
+    width: 100%;
+}
+
+.ftf-box table thead tr, .ftf-box table tbody tr
+{
+    width: 100%;
+}
+
+.ftf-box table tbody tr td, .ftf-box table thead tr th
+{
+    padding: calc(var(--ftf-padding) / 2);
+    text-align: left;
+}
+
+.ftf-box table tbody tr:nth-child(even)
+{
+    background-color: var(--ftf-color-table-alt);
+}
+
+.ftf-box table th:last-child, .ftf-box td:last-child
+{
+    text-align: right;
+}
+
+.ftf-box table tbody tr:hover
+{
+    background-color: var(--ftf-color-table-alt-hover);
+    cursor: pointer;
+}
+
+.ftf-arrow
+{
+    height: 100px;
+    background-image: url('../img/arrow.png');
+    background-repeat: no-repeat;
+}
+
+.ftf-box-no-margin
+{
+    margin-bottom: 0;
 }
