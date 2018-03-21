@@ -1,2 +1,6 @@
 # Farm To Fork
-## A POC with the help of BigchainDB.
+## A Proof-of-concept with the help of BigchainDB.
+
+This POC was created as a follow-along project for this tutorial (still have to finish it).
+
+To gain a better understanding, follow the tutorial on medium!
