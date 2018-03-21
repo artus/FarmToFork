@@ -81,7 +81,7 @@ var ftfApp = new Vue({
 
         },
         loadAllAssets() {
-            this.farmToFork.connection.searchAssets('FtfTutorialAsset').then( response => {
+            this.farmToFork.getAllAssets().then( response => {
                 ftfApp.allAssets = response;
             });
         },

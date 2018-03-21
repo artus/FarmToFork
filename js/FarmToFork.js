@@ -105,6 +105,24 @@ class FarmToFork {
     }
 
     /**
+     * Get a list of all assets that belong to our POC. (they contain the string 'FtfTutorialAsset)
+     * 
+     * @returns {Array} The array of all assets that belong to our POC.
+     */
+    getAllAssets() {
+        
+        return new Promise((resolve, reject) => {
+
+            this.connection.searchAssets('FtfTutorialAsset').then( response => {
+                resolve(response);
+            });
+
+        }).catch(error => {
+            reject(error);
+        })
+    }
+
+    /**
      * Load a transaction by using its transaction id.
      * @param {*} transactionId 
      */
@@ -120,6 +138,12 @@ class FarmToFork {
         });
     }
 
+    /**
+     * Update the asset by issuing a TRANSFER transaction with metadata containing the action performed on the asset.
+     * 
+     * @param {*} transaction - The transaction that needs to be chained upon.
+     * @param {*} action - The action performed on the asset (e.g. processed with preservative).
+     */
     updateAsset(transaction, action) {
 
         return new Promise((resolve, reject) => {
@@ -168,6 +192,12 @@ class FarmToFork {
 
     }
 
+    /**
+     * Transfer an asset to another owner by using his/her/its public key.
+     * 
+     * @param {*} transaction - The transaction that needs to be chained upon.
+     * @param {*} receiverPublicKey - The public key of the receiver.
+     */
     transferAsset(transaction, receiverPublicKey) {
 
         return new Promise((resolve, reject) => {

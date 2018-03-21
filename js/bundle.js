@@ -1,5 +1,3 @@
-// Updated
-
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ftf_module = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 },{}],2:[function(require,module,exports){
@@ -5735,6 +5733,24 @@ class FarmToFork {
     }
 
     /**
+     * Get a list of all assets that belong to our POC. (they contain the string 'FtfTutorialAsset)
+     * 
+     * @returns {Array} The array of all assets that belong to our POC.
+     */
+    getAllAssets() {
+        
+        return new Promise((resolve, reject) => {
+
+            this.connection.searchAssets('FtfTutorialAsset').then( response => {
+                resolve(response);
+            });
+
+        }).catch(error => {
+            reject(error);
+        })
+    }
+
+    /**
      * Load a transaction by using its transaction id.
      * @param {*} transactionId 
      */
@@ -5750,6 +5766,12 @@ class FarmToFork {
         });
     }
 
+    /**
+     * Update the asset by issuing a TRANSFER transaction with metadata containing the action performed on the asset.
+     * 
+     * @param {*} transaction - The transaction that needs to be chained upon.
+     * @param {*} action - The action performed on the asset (e.g. processed with preservative).
+     */
     updateAsset(transaction, action) {
 
         return new Promise((resolve, reject) => {
@@ -5798,6 +5820,12 @@ class FarmToFork {
 
     }
 
+    /**
+     * Transfer an asset to another owner by using his/her/its public key.
+     * 
+     * @param {*} transaction - The transaction that needs to be chained upon.
+     * @param {*} receiverPublicKey - The public key of the receiver.
+     */
     transferAsset(transaction, receiverPublicKey) {
 
         return new Promise((resolve, reject) => {
