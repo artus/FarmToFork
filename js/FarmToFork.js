@@ -167,6 +167,52 @@ class FarmToFork {
         });
 
     }
+
+    transferAsset(transaction, receiverPublicKey) {
+
+        return new Promise((resolve, reject) => {
+
+            // Construct metadata.
+            const metaData = {
+                "action" : "Transfer food-item to another firm.",
+                "date" : new Date().toISOString()
+            };
+
+            // Construct the new transaction
+            const transferTransaction = driver.Transaction.makeTransferTransaction(
+
+                // The previous transaction to be chained upon.
+                [{ tx: transaction, output_index: 0}],
+
+                // The (poutput) condition to be fullfilled in the next transaction.
+                [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(receiverPublicKey))],
+
+                // Metadata
+                metaData
+            );
+
+            // Sign the new transaction.
+            const signedTransaction = driver.Transaction.signTransaction(transferTransaction, this.currentIdentity.privateKey);
+
+            // Post the transaction.
+            this.connection.postTransaction(signedTransaction).then( postedTransaction => {
+
+                // Check for the status of the posted transaction.
+                return this.connection.pollStatusAndFetchTransaction(postedTransaction.id);
+
+            }).then( successfullyPostedTransaction => {
+
+                // Return the posted transaction to the callback funcion.
+                resolve(successfullyPostedTransaction);
+
+            }).catch( error => {
+                
+                // Throw error
+                reject(error);
+            })
+
+        });
+    }
 }
 
 // Create exports to make some functionality available in the browser.

@@ -37,13 +37,13 @@
                 <hr>
 
                 <div class="ftf-menu-item" v-on:click="menuClicked('assets')">
-                        <i class="fas fa-user"></i>
-                    <div class="ftf-menu-item-link">Assets</div>
+                        <i class="fas fa-industry"></i>
+                    <div class="ftf-menu-item-link">Your assets</div>
                 </div>
 
-                <div class="ftf-menu-item">
-                    <i class="fas fa-user"></i>
-                    <div class="ftf-menu-item-link">Transactions</div>
+                <div class="ftf-menu-item" v-on:click="menuClicked('all-assets')">
+                    <i class="fas fa-utensils"></i>
+                    <div class="ftf-menu-item-link">All assets</div>
                 </div>
 
             </div>
@@ -99,7 +99,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="asset in assets" v-on:click="transactionClicked(asset.id)">
+                                <tr v-for="asset in assets" v-on:click="transactionClicked(asset.id, true)">
                                     <td>{{asset.asset.data.item}}</td>
                                     <td>{{asset.id}}</td>
                                 </tr>
@@ -121,12 +121,22 @@
                         <p>Each asset on the BigchainDB has a list of transactions that have been performed upon it.</p>
                     </div>
 
-                    <div class="ftf-box ftf-wide ftf-box-no-margin">
+                    <div class="ftf-box ftf-wide ftf-box-no-margin" v-if="myAssets">
                         <h2>Perform action on food-item: {{activeTransaction.asset.data.item}}</h2>
                         <p>Enter an action to perform:</p>
                         <div class="ftf-control">
-                            <input type="text" v-model="actionInput">
+                            <input type="password" v-model="actionInput">
                             <div class="ftf-input-button" v-on:click="actionButtonClicked()">process</div>
+                        </div>
+
+                        <h2>OR</h2>
+
+                        <h2>Transfer the asset to another business</h2>
+                        <p>This action is the equivalent of selling the product to another firm that will in turn process it for their purpose.</p>
+                        <p>The receiver enters their password:</p>
+                        <div class="ftf-control">
+                            <input type="text" v-model="otherFirmInput">
+                            <div class="ftf-input-button" v-on:click="otherFirmButtonClicked()">transfer</div>
                         </div>
                     </div>
 
@@ -138,6 +148,36 @@
                     </div>
                     </span>
                     
+                </div>
+
+                <!-- All assets pane -->
+                <div v-if="isActive('all-assets')" class="ftf-content-pane">
+
+                    <div class="ftf-box">
+                        <h2>All assets | food-items</h2>
+                        <hr>
+                        <p>All data on a bigchaindb network (that you participate to) is visible to you, even the assets that never belonged to you. This is what provides the transparancy.</p>
+                    </div>
+
+                    <div class="ftf-box ftf-full">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>transaction ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="asset of allAssets" v-on:click="transactionClicked(asset.id, false)">
+                                    <td>{{asset.data.item}}</td>
+                                    <td>{{asset.id}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </div>
 
             </div>

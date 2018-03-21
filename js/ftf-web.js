@@ -8,6 +8,7 @@ var ftfApp = new Vue({
         identitySeedInput: "ftf",
         assetInput: "",
         actionInput: "",
+        otherFirmInput: "",
         activeTransaction: {
             "asset": {
                 "data": {
@@ -20,6 +21,10 @@ var ftfApp = new Vue({
         transactionIds: new Array(),
         assets: new Array(),
         transactionsForAsset: new Array(),
+        allAssets: new Array(),
+
+        // Flag
+        myAssets: false,
     },
     methods: {
         setActive(pane) {
@@ -58,6 +63,11 @@ var ftfApp = new Vue({
                     this.loadAssetsIds();
                     this.activePane = "assets";
                     break;
+
+                case "all-assets":
+                    this.loadAllAssets();
+                    this.activePane = "all-assets";
+                    break;
             }
         },
 
@@ -69,6 +79,11 @@ var ftfApp = new Vue({
                 ftfApp.loadAssetsFromTransactionIds();
             });
 
+        },
+        loadAllAssets() {
+            this.farmToFork.connection.searchAssets('FtfTutorialAsset').then( response => {
+                ftfApp.allAssets = response;
+            });
         },
         loadAssetsFromTransactionIds() {
 
@@ -85,7 +100,8 @@ var ftfApp = new Vue({
                 })
             }
         },
-        transactionClicked(id) {
+        transactionClicked(id, myAssets) {
+            this.myAssets = myAssets;
             this.farmToFork.connection.getTransaction(id).then(response => ftfApp.activeTransaction = response);
             this.loadTransactionsForAsset(id);
             this.setActive('transactions');
@@ -95,17 +111,19 @@ var ftfApp = new Vue({
             this.farmToFork.connection.listTransactions(assetId).then(response => ftfApp.transactionsForAsset = response);
         },
         actionButtonClicked() {
-            console.log(this.activeTransaction);
             this.farmToFork.connection.listTransactions(this.activeTransaction.id).then(response => {
                 return ftfApp.farmToFork.updateAsset(response[response.length - 1], ftfApp.actionInput);
             }).then(response => {
                 ftfApp.loadTransactionsForAsset(ftfApp.activeTransaction.id);
             });
-            /*this.farmToFork.updateAsset(this.activeTransaction, this.actionInput).then(response => {
-                ftfApp.loadTransactionsForAsset(ftfApp.activeTransaction.id);
-            })*/
-        }
-
-
+        },
+        otherFirmButtonClicked() {
+            this.farmToFork.connection.listTransactions(this.activeTransaction.id).then(response => {
+                return this.farmToFork.transferAsset(response[response.length -1], ftfApp.farmToFork.generateKeypair(ftfApp.otherFirmInput).publicKey);
+            }).then( response => {
+                // Don't do anything with the response, go back to asset overview.
+                ftfApp.menuClicked('assets');
+            });
+        },
     }
 });
