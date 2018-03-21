@@ -125,7 +125,7 @@
                         <h2>Perform action on food-item: {{activeTransaction.asset.data.item}}</h2>
                         <p>Enter an action to perform:</p>
                         <div class="ftf-control">
-                            <input type="password" v-model="actionInput">
+                            <input type="text" v-model="actionInput">
                             <div class="ftf-input-button" v-on:click="actionButtonClicked()">process</div>
                         </div>
 
@@ -135,7 +135,7 @@
                         <p>This action is the equivalent of selling the product to another firm that will in turn process it for their purpose.</p>
                         <p>The receiver enters their password:</p>
                         <div class="ftf-control">
-                            <input type="text" v-model="otherFirmInput">
+                            <input type="password" v-model="otherFirmInput">
                             <div class="ftf-input-button" v-on:click="otherFirmButtonClicked()">transfer</div>
                         </div>
                     </div>
