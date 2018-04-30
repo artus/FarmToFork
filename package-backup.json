@@ -4,7 +4,7 @@
   "description": "A POC library the life-cycle of a food-item in the food-industry.",
   "main": "js/FarmToFork.js",
   "dependencies": {
-    "bigchaindb-driver": "^4.0.0",
+    "bigchaindb-driver": "^3.2.0",
     "bip39": "^2.5.0",
     "dotenv": "^5.0.1",
     "localenvify": "^1.0.1"

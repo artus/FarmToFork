@@ -17,6 +17,7 @@ class FarmToFork {
             app_id: process.env.APP_ID,
             app_key: process.env.APP_KEY,
         });
+        //this.connection = new driver.Connection(process.env.APP_URL);
 
         this.currentIdentity = this.generateKeypair("ftf");
     }
@@ -67,11 +68,7 @@ class FarmToFork {
             const signedTransaction = driver.Transaction.signTransaction(introduceFoodItemToMarketTransaction, this.currentIdentity.privateKey);
 
             // Post the transaction to the network
-            this.connection.postTransaction(signedTransaction).then(response => {
-
-                // Check the status and return when succesfull
-                return this.connection.pollStatusAndFetchTransaction(response.id);
-            }).then(postedTransaction => {
+            this.connection.postTransactionCommit(signedTransaction).then(postedTransaction => {
 
                 // Let the promise resolve the created transaction.
                 resolve(postedTransaction);
@@ -110,10 +107,10 @@ class FarmToFork {
      * @returns {Array} The array of all assets that belong to our POC.
      */
     getAllAssets() {
-        
+
         return new Promise((resolve, reject) => {
 
-            this.connection.searchAssets('FtfTutorialAsset').then( response => {
+            this.connection.searchAssets('FtfTutorialAsset').then(response => {
                 resolve(response);
             });
 
@@ -174,13 +171,7 @@ class FarmToFork {
 
             console.log("Posting transaction.");
             // Post the new transaction.
-            this.connection.postTransaction(signedTransaction).then(response => {
-
-                console.log("Transaction posted.");
-
-                // Poll for status.
-                return this.connection.pollStatusAndFetchTransaction(response.id);
-            }).then(postedTransaction => {
+            this.connection.postTransactionCommit(signedTransaction).then(postedTransaction => {
 
                 // Return the posted transaction to the callback function.
                 resolve(postedTransaction);
@@ -204,15 +195,15 @@ class FarmToFork {
 
             // Construct metadata.
             const metaData = {
-                "action" : "Transfer food-item to another firm.",
-                "date" : new Date().toISOString()
+                "action": "Transfer food-item to another firm.",
+                "date": new Date().toISOString()
             };
 
             // Construct the new transaction
             const transferTransaction = driver.Transaction.makeTransferTransaction(
 
                 // The previous transaction to be chained upon.
-                [{ tx: transaction, output_index: 0}],
+                [{ tx: transaction, output_index: 0 }],
 
                 // The (poutput) condition to be fullfilled in the next transaction.
                 [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(receiverPublicKey))],
@@ -225,18 +216,13 @@ class FarmToFork {
             const signedTransaction = driver.Transaction.signTransaction(transferTransaction, this.currentIdentity.privateKey);
 
             // Post the transaction.
-            this.connection.postTransaction(signedTransaction).then( postedTransaction => {
-
-                // Check for the status of the posted transaction.
-                return this.connection.pollStatusAndFetchTransaction(postedTransaction.id);
-
-            }).then( successfullyPostedTransaction => {
+            this.connection.postTransactionCommit(signedTransaction).then(successfullyPostedTransaction => {
 
                 // Return the posted transaction to the callback funcion.
                 resolve(successfullyPostedTransaction);
 
-            }).catch( error => {
-                
+            }).catch(error => {
+
                 // Throw error
                 reject(error);
             })
