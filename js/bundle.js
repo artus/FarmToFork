@@ -5641,11 +5641,11 @@ class FarmToFork {
      */
     constructor() {
         // Initialise a new connection.
-        /*this.connection = new driver.Connection(process.env.APP_URL, {
-            app_id: process.env.APP_ID,
-            app_key: process.env.APP_KEY,
-        });*/
-        this.connection = new driver.Connection("http://localhost:9984/api/v1/");
+        this.connection = new driver.Connection("https://test.bigchaindb.com/api/v1/", {
+            app_id: "7ae13b61",
+            app_key: "33ba1a1272ea6d958fc060e2ef5ade2b",
+        });
+        //this.connection = new driver.Connection(process.env.APP_URL);
 
         this.currentIdentity = this.generateKeypair("ftf");
     }
